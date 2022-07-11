@@ -1,56 +1,51 @@
 class TextChunk
-  attr_accessor :string_val
-
-  def initialize(n)
-    @n = n
-    @string_val = ""
-
-    if @n.is_a? String
-      @string_val = @n        
-    else
-      @string_val = int_to_str(n)
-    end
-  end
-
-  def int_value
-    result = 0        
-
-    for c in reversed(@string_val)
-      result = result * 256
-      result += ord(c)
+    def initialize(n)
+        case n
+        when String
+            @stringVal = n
+        when Numeric
+            @stringVal = numericToString(n)
+        end
     end
 
-    return result
-  end
-
-  private
-
-  def int_to_str(n)
-    if n == 0
-      string_val = "0"    
-    else
-      string_val = ""        
-  
-      while n > 0
-          quot, rem = divmod(n, 256)
-          char_num = rem            
-          string_val += chr(char_num)
-          n = quot
-      end
+    def numericToString(n)
+        strVal = ""
+        if n == 0
+            strVal = "0"
+        else
+            while n > 0
+                ans = n.divmod(256)
+                charNum = ans[1]
+                strVal += charNum.chr
+                n = ans[0]
+            end
+        end
+        return strVal
     end
-  
-    return string_val
-  end
-  
-  def block_size(n)
-    bsize = 0    
-    temp = n - 1    
-  
-    while temp > 0
-      temp /= 2        
-      bsize += 1    
+
+    def to_s
+        return @stringVal
     end
-  
-    return int(bsize/8)
-  end
+
+    def to_i
+        result = 0
+
+        @stringVal.reverse.split('').each{|c|
+            result = result * 256
+            result += c.ord
+        }
+
+        return result
+    end
+
+    def self.blockSize(n)
+        blockSize = 0
+        temp = n - 1
+        while temp > 1
+            temp = temp / 2
+            blockSize += 1
+        end
+
+        return blockSize / 8
+    end
 end
