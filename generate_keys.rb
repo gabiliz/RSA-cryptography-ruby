@@ -16,4 +16,3 @@ d = inv_mod(e, tot)
 
 File.open("public_key.txt", 'w') {|f| f.write("#{e}\n#{n}")}
 File.open("private_key.txt", 'w') {|f| f.write("#{d}\n#{n}")}
-

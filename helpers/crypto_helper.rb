@@ -8,10 +8,10 @@ module CryptoHelper
     split = []
     stop = 0
 
-    for i = 0; i < strLength; i += size do
+    for i in strLength do
       stop = i + size
 
-      if stop > str_length do
+      if stop > str_length
         stop = str_length
       end
 
@@ -20,7 +20,7 @@ module CryptoHelper
     end
   end
 
-  def self.get_text_from_src_file(err, src_file_name)
+  def self.get_text_from_src_file(src_file_name)
     buf, err = File.read(src_file_name)
 
     if err != nil
@@ -35,14 +35,14 @@ module CryptoHelper
     dst_file, err = File.open(dst_file_name)
     dst_writer = File.new(dst_file)
 
-    err, dst_file, dst_writer
+    return dst_file, dst_writer
   end
 
   def self.get_key_file_reader(key_file_name)
     key_file, err = File.open(key_file_name)
     key_file_reader = File.read(key_file)
 
-    err, key_file_reader
+    return key_file_reader
   end
 
   def self.get_key_from_file(key_file_reader)
@@ -51,19 +51,19 @@ module CryptoHelper
     key_str = read_in(key_file_reader)
     key = key_str.to_s
 
-    modulus, key
+    return modulus, key
   end
 
-  def read_in(string, error)
+  def self.read_in(key_file_reader)
     is_prefix = true
     err = nil
     line = []
 
-    for is_prefix && err == nil do
-		  line, is_prefix, err = Readline.readline()
+    if is_prefix && err == nil
+		  line, is_prefix, err = key_file_reader.readline()
 		  ln = append(ln, line...)
     end
 
-    ln.to_s, err
+    return ln.to_s, err
   end
 end

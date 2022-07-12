@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require './helpers/text_chunk'
+require './helpers/crypto_helper'
+
 key_file_name = ARGV[0]
 src_file_name = ARGV[1]
 dst_file_name = ARGV[2]
@@ -11,7 +14,7 @@ if err != nil
   puts "Erro abrindo arquivo de chaves: #{err}"
 end
 
-err, dst_file, dst_writer = CryptoHelper.get_key_file_writer(dst_file_name)
+err, dst_file, dst_writer = CryptoHelper.get_dst_file_writer(dst_file_name)
 if err != nil
   puts "Erro abrindo arquivo de saída: #{err}"
 end
@@ -23,13 +26,11 @@ text = CryptoHelper.get_text_from_src_file(err, src_file_name)
 chunk_size = text_chunk.block_size(modulus)
 coded_text = Base64.encode64(text)
 
-for CryptoHelper.split_by_width(coded_text, chunk_size) do
-  original_chunk = text_chunk.to_string(chunk)
+original_chunk = text_chunk.to_string(chunk)
 
-  encoded_chunk = original_chunk.Exp(original_chunk, key, modulus)
+encoded_chunk = original_chunk.Exp(original_chunk, key, modulus)
 
-  File.open(dst_writer, "w+") {|f| f.write(encoded_chunk) }
-end
+File.open(dst_writer, "w+") {|f| f.write(encoded_chunk) }
 
 err = dst_writer.flush
 if err != nil
