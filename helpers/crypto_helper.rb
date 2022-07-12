@@ -59,8 +59,8 @@ module CryptoHelper
     err = nil
     line = []
 
-    for isPrefix && err == nil do
-		  line, isPrefix, err = Readline.readline()
+    for is_prefix && err == nil do
+		  line, is_prefix, err = Readline.readline()
 		  ln = append(ln, line...)
     end
 
