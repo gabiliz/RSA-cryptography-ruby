@@ -24,14 +24,14 @@ module CryptoHelper
     buf, err = File.read(src_file_name)
 
     if err != nil
-      puts ("erro abrindo arquivo source: #{src_file_name}\n")
+      puts ("Erro ao abrir o arquivo source: #{src_file_name}")
     end
 
     text = buf.to_s
     text
   end
 
-  def self.get_dst_file_write(dst_file_name)
+  def self.get_dst_file_writer(dst_file_name)
     dst_file, err = File.open(dst_file_name)
     dst_writer = File.new(dst_file)
 

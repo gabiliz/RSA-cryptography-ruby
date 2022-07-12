@@ -7,7 +7,6 @@ def inv_mod(num, mod)
     res
   end
 
-
 p = 1521289243
 q = 1521289411
 n = p * q
