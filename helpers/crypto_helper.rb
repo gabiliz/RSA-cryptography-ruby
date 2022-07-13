@@ -61,7 +61,7 @@ module CryptoHelper
 
     if is_prefix && err == nil
 		  line, is_prefix, err = key_file_reader.readline()
-		  ln = append(ln, line...)
+		  ln = ln.append(line)
     end
 
     return ln.to_s, err
